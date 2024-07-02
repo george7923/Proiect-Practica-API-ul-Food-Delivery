@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace PRACTICA_OFICIAL.DataLayer
 {
@@ -11,8 +11,9 @@ namespace PRACTICA_OFICIAL.DataLayer
         public DbSet<Restaurant> Restaurante { get; set; }
         public DbSet<Produs> Produse { get; set; }
         public DbSet<ProdusComandat> ProduseComandate { get; set; }
+        public DbSet<Review> Reviewuri { get; set; }
 
-        
+
     }
 
 }
