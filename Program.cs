@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -18,14 +18,16 @@ namespace PRACTICA_OFICIAL
         {
             var builder = WebApplication.CreateBuilder(args);
 
-
             builder.Services.AddDbContext<DB_Bolt>(opts =>
-                opts.UseSqlServer(connectionString: builder.Configuration.GetConnectionString("FoodDeliveryDb")));
+                opts.UseSqlServer(builder.Configuration.GetConnectionString("FoodDeliveryDb")));
+
             builder.Services.AddControllers().AddJsonOptions(opts =>
-                opts.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
+            {
+                opts.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+                opts.JsonSerializerOptions.Converters.Add(new DateTimeConverter());
+            });
 
             builder.Services.AddSwaggerGen();
-
 
             builder.Services.AddCors(options =>
             {
@@ -55,7 +57,6 @@ namespace PRACTICA_OFICIAL
             });
 
             var app = builder.Build();
-
 
             if (app.Environment.IsDevelopment())
             {
